@@ -26,6 +26,19 @@ class BootStrap {
 		def cap1venture1 = new Card(cardname: "VentureOne", network: visa, issuer: cap1).save()
 		visa.addToCards(cap1venture1)
 		cap1.addToCards(cap1venture1)
+		
+		def chasfreedom = new Card(cardname: "Freedom", network: visa, issuer:chas).save()
+		visa.addToCards(chasfreedom)
+		chas.addToCards(chasfreedom)
+		
+		def chassapphirepreferred = new Card(cardname: "Sapphire Preferred", network: visa, issuer:chas).save()
+		visa.addToCards(chassapphirepreferred)
+		chas.addToCards(chassapphirepreferred)
+		
+		def unitedmileageplus = new Card(cardname: "United Mileage Plus", network: visa, issuer:chas).save()
+		visa.addToCards(unitedmileageplus)
+		chas.addToCards(unitedmileageplus)
+		
     }
 	
     def destroy = {
