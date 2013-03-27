@@ -7,6 +7,7 @@ import org.scribe.model.Token
 import org.scribe.model.Verb
 import org.scribe.oauth.OAuthService
 import grails.converters.*
+import groovy.json.*
 
 class YelpSearchService {
 
@@ -28,6 +29,30 @@ class YelpSearchService {
 		}
 		service.signRequest(accessToken, oarequest);
 		def response = oarequest.send()
-		response.body
+		//response.body
+		
+		def json = new JsonSlurper().parseText(response.body)
+		def results = [:]
+		def businesslist = []
+		json.businesses.each() { it ->
+			def business = [:]
+			def categorieslist = []
+			String address = ""
+			business.name = it.name
+			business.lat = it.location.coordinate.latitude
+			business.lng = it.location.coordinate.longitude
+			it.location.address.each() { item ->
+				address = address + item + " "
+			}
+			if (address.length() > 0) address = address.substring(0, address.length()-1)
+			business.address = address + ", " + it.location.city + ", " + it.location.state_code
+			it.categories.each() { item ->
+				categorieslist << item[1]
+			}
+			business.categories = categorieslist
+			businesslist << business
+		}
+		results.businesses = businesslist
+		return results
     }
 }
