@@ -50,6 +50,17 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${cardInstance?.rewards}">
+				<li class="fieldcontain">
+					<span id="rewards-label" class="property-label"><g:message code="card.rewards.label" default="Rewards" /></span>
+					
+						<g:each in="${cardInstance.rewards}" var="r">
+						<span class="property-value" aria-labelledby="rewards-label"><g:link controller="cardReward" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
 			</ol>
 			<g:form>
 				<fieldset class="buttons">

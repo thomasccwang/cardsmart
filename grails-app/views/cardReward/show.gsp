@@ -50,13 +50,20 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${cardRewardInstance?.rewards}">
+				<g:if test="${cardRewardInstance?.card}">
 				<li class="fieldcontain">
-					<span id="rewards-label" class="property-label"><g:message code="cardReward.rewards.label" default="Rewards" /></span>
+					<span id="card-label" class="property-label"><g:message code="cardReward.card.label" default="Card" /></span>
 					
-						<g:each in="${cardRewardInstance.rewards}" var="r">
-						<span class="property-value" aria-labelledby="rewards-label"><g:link controller="rewardCategory" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></span>
-						</g:each>
+						<span class="property-value" aria-labelledby="card-label"><g:link controller="card" action="show" id="${cardRewardInstance?.card?.id}">${cardRewardInstance?.card?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${cardRewardInstance?.category}">
+				<li class="fieldcontain">
+					<span id="category-label" class="property-label"><g:message code="cardReward.category.label" default="Category" /></span>
+					
+						<span class="property-value" aria-labelledby="category-label"><g:link controller="rewardCategory" action="show" id="${cardRewardInstance?.category?.id}">${cardRewardInstance?.category?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

@@ -26,3 +26,20 @@
 	<g:select id="network" name="network.id" from="${com.cardsmart.CardNetwork.list()}" optionKey="id" required="" value="${cardInstance?.network?.id}" class="many-to-one"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: cardInstance, field: 'rewards', 'error')} ">
+	<label for="rewards">
+		<g:message code="card.rewards.label" default="Rewards" />
+		
+	</label>
+	
+<ul class="one-to-many">
+<g:each in="${cardInstance?.rewards?}" var="r">
+    <li><g:link controller="cardReward" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></li>
+</g:each>
+<li class="add">
+<g:link controller="cardReward" action="create" params="['card.id': cardInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'cardReward.label', default: 'CardReward')])}</g:link>
+</li>
+</ul>
+
+</div>
+

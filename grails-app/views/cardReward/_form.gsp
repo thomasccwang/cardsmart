@@ -26,11 +26,19 @@
 	<g:select name="endMonth" from="${1..12}" class="range" required="" value="${fieldValue(bean: cardRewardInstance, field: 'endMonth')}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: cardRewardInstance, field: 'rewards', 'error')} ">
-	<label for="rewards">
-		<g:message code="cardReward.rewards.label" default="Rewards" />
-		
+<div class="fieldcontain ${hasErrors(bean: cardRewardInstance, field: 'card', 'error')} required">
+	<label for="card">
+		<g:message code="cardReward.card.label" default="Card" />
+		<span class="required-indicator">*</span>
 	</label>
-	<g:select name="rewards" from="${com.cardsmart.RewardCategory.list()}" multiple="multiple" optionKey="id" size="5" value="${cardRewardInstance?.rewards*.id}" class="many-to-many"/>
+	<g:select id="card" name="card.id" from="${com.cardsmart.Card.list()}" optionKey="id" required="" value="${cardRewardInstance?.card?.id}" class="many-to-one"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: cardRewardInstance, field: 'category', 'error')} required">
+	<label for="category">
+		<g:message code="cardReward.category.label" default="Category" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select id="category" name="category.id" from="${com.cardsmart.RewardCategory.list()}" optionKey="id" required="" value="${cardRewardInstance?.category?.id}" class="many-to-one"/>
 </div>
 

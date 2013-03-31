@@ -1,6 +1,8 @@
 import com.cardsmart.CardNetwork
 import com.cardsmart.CardIssuer
 import com.cardsmart.Card
+import com.cardsmart.CardReward
+import com.cardsmart.RewardCategory
 
 class BootStrap {
 
@@ -15,31 +17,32 @@ class BootStrap {
 		def bofa = new CardIssuer(issuername: "Bank of America").save()
 		def citi = new CardIssuer(issuername: "Citi").save()
 		
-		def cap1cashrewards = new Card(cardname: "Cash Rewards", network: masc, issuer: cap1).save()
-		masc.addToCards(cap1cashrewards)
-		cap1.addToCards(cap1cashrewards)
+		def bofacashrewards = new Card(cardname: "Cash Rewards", network: visa, issuer: bofa).save()
+		visa.addToCards(bofacashrewards)
+		bofa.addToCards(bofacashrewards)
 		
-		def cap1venture = new Card(cardname: "Venture Rewards", network: visa, issuer: cap1).save()
-		visa.addToCards(cap1venture)
-		cap1.addToCards(cap1venture)
-		
-		def cap1venture1 = new Card(cardname: "VentureOne", network: visa, issuer: cap1).save()
-		visa.addToCards(cap1venture1)
-		cap1.addToCards(cap1venture1)
-		
-		def chasfreedom = new Card(cardname: "Freedom", network: visa, issuer:chas).save()
-		visa.addToCards(chasfreedom)
+		def chasfreedom = new Card(cardname: "Freedom", network: masc, issuer: chas).save()
+		masc.addToCards(chasfreedom)
 		chas.addToCards(chasfreedom)
 		
-		def chassapphirepreferred = new Card(cardname: "Sapphire Preferred", network: visa, issuer:chas).save()
-		visa.addToCards(chassapphirepreferred)
-		chas.addToCards(chassapphirepreferred)
+		def catgrocery = new RewardCategory(name:"grocery", description:"Grocery").save()
+		def catgas = new RewardCategory(name:"servicestations", description:"Gas & Service Stations").save()
+		def catdrugstore = new RewardCategory(name:"drugstores", description:"Drug Stores").save()
+		def catrestaurant = new RewardCategory(name:"restaurants", description:"Restaurants").save()
+		def catcinema = new RewardCategory(name:"movietheaters", description:"Cinema").save()
 		
-		def unitedmileageplus = new Card(cardname: "United Mileage Plus", network: visa, issuer:chas).save()
-		visa.addToCards(unitedmileageplus)
-		chas.addToCards(unitedmileageplus)
+		def bofacrgroceries = new CardReward(card:bofacashrewards, category: catgrocery, description:"2% cash back on groceries", startMonth:1, endMonth:12).save()
+		bofacashrewards.addToRewards(bofacrgroceries)
 		
-    }
+		def bofacrgas = new CardReward(card:bofacashrewards, category: catgas, description:"3% cash back on gas", startMonth:1, endMonth:12).save()
+		bofacashrewards.addToRewards(bofacrgas)
+		
+		def chasfrrest = new CardReward(card:chasfreedom, category: catrestaurant, description:"5% cash back at restaurants", startMonth:4, endMonth:6).save()
+		chasfreedom.addToRewards(chasfrrest)
+		
+		def chasfrcine = new CardReward(card:chasfreedom, category: catcinema, description:"5% cash back at movie theaters", startMonth:4, endMonth:6).save()
+		chasfreedom.addToRewards(chasfrcine)
+	}
 	
     def destroy = {
     }

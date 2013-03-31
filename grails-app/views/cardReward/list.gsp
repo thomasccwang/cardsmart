@@ -30,6 +30,10 @@
 					
 						<g:sortableColumn property="endMonth" title="${message(code: 'cardReward.endMonth.label', default: 'End Month')}" />
 					
+						<th><g:message code="cardReward.card.label" default="Card" /></th>
+					
+						<th><g:message code="cardReward.category.label" default="Category" /></th>
+					
 					</tr>
 				</thead>
 				<tbody>
@@ -41,6 +45,10 @@
 						<td>${fieldValue(bean: cardRewardInstance, field: "startMonth")}</td>
 					
 						<td>${fieldValue(bean: cardRewardInstance, field: "endMonth")}</td>
+					
+						<td>${fieldValue(bean: cardRewardInstance, field: "card")}</td>
+					
+						<td>${fieldValue(bean: cardRewardInstance, field: "category")}</td>
 					
 					</tr>
 				</g:each>

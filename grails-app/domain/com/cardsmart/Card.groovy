@@ -7,6 +7,7 @@ class Card {
 	String cardname
 	CardNetwork network
 	CardIssuer issuer
+	static hasMany = [rewards:CardReward]
 
 	static constraints = {
 		cardname blank : false

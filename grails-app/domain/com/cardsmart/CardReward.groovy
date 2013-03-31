@@ -1,11 +1,11 @@
 package com.cardsmart
 
 class CardReward {
+	Card card
+	RewardCategory category
 	String description
 	Integer startMonth
 	Integer endMonth
-	
-	static hasMany = [rewards:RewardCategory]
 	
     static constraints = {
 		description (blank:false)
