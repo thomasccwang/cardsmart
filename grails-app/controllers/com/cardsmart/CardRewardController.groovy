@@ -1,6 +1,7 @@
 package com.cardsmart
 
 import org.springframework.dao.DataIntegrityViolationException
+import grails.converters.*
 
 class CardRewardController {
 
@@ -99,6 +100,34 @@ class CardRewardController {
             redirect(action: "show", id: id)
         }
     }
+	
+	def jsonlist() {
+		def results = [:]
+		def cardslist = []
+		def catnameslist = []
+		String catnamesstr = ""
+		Card.list().each { it ->
+			def jsoncard = [:]
+			jsoncard.name = it.toString()
+			def rewardslist = []
+			it.rewards.each { item ->
+				def jsonreward = [:]
+				jsonreward.description = item.description
+				jsonreward.category = item.category.name
+				rewardslist << jsonreward
+				if (catnameslist.find{c -> c == item.category.name } == null) catnameslist << item.category.name
+			}
+			jsoncard.rewards = rewardslist
+			cardslist << jsoncard			
+		}
+		results.cards = cardslist
+		catnameslist.each { it ->
+			catnamesstr += it
+			if (it != catnameslist.last()) catnamesstr += ","
+		}
+		results.categories = catnamesstr
+		render results as JSON
+	}
 	
 	def map() {
 		def rewardnameslist = []

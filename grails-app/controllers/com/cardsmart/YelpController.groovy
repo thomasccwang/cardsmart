@@ -6,6 +6,7 @@ import grails.converters.*
 class YelpController {
 
 	def yelpSearchService
+	def geocoderService
     
 	def index() {
 		render "default page"
@@ -13,6 +14,11 @@ class YelpController {
 	
 	def search() {
 		def results = yelpSearchService.search(params)
+		render results as JSON
+	}
+	
+	def geocode() {
+		def results = geocoderService.geocodeAddress(params.address)
 		render results as JSON
 	}
 }
