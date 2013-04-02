@@ -130,10 +130,5 @@ class CardRewardController {
 	}
 	
 	def map() {
-		def rewardnameslist = []
-		CardReward.list().each {
-			rewardnameslist.add(it.category.name)
-		}
-		render rewardnameslist
 	}
 }
