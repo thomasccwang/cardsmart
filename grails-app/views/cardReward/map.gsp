@@ -21,7 +21,7 @@ function initialize() {
 	var mapOptions = {
 		//center: gStartLocation,
 		zoom: 16,
-		minZoom: 14,
+		minZoom: 12,
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
 		mapTypeControl: true,
 		mapTypeControlOptions: {position: google.maps.ControlPosition.TOP_RIGHT},
@@ -32,6 +32,20 @@ function initialize() {
 	};
 	gMap = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
+	google.maps.event.addListener(gMap, 'center_changed', function() {
+	    // 2 seconds after the center of the map has changed, re-do search
+	    window.setTimeout(function() {
+	    	loadCategories();
+	    }, 2000);
+	  });
+
+	google.maps.event.addListener(gMap, 'zoom_changed', function() {
+	    // 2 seconds after the center of the map has changed, re-do search
+	    window.setTimeout(function() {
+	    	loadCategories();
+	    }, 2000);
+	  });
+	  
 	//loadCategories();
 	handleUserGeolocation();
 } // function - initialize()
@@ -50,6 +64,15 @@ function handleUserGeolocation() {
 		gInitialLocation = gDefaultLocation;
 		gMap.setCenter(gInitialLocation);
 		loadCategories();
+	}
+}
+
+function deleteOverlays() {
+	if (gMarkersArray) {
+		for (i in gMarkersArray) {
+			gMarkersArray[i].setMap(null);
+		}
+		gMarkersArray.length = 0;
 	}
 }
 
@@ -73,6 +96,7 @@ function loadMatchingPlaces(categories) {
 	jQuery.getJSON(url, function(data){
 		var sidebar = document.getElementById('sidebar');
 		sidebar.innerHTML = '';
+		deleteOverlays();
 		for (var i = 0; i < data.businesses.length; i++) {
 			//alert(data.businesses[i].name);	
 			var latlng = new google.maps.LatLng(data.businesses[i].lat,data.businesses[i].lng);
