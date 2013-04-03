@@ -53,6 +53,18 @@ class YelpSearchService {
 			businesslist << business
 		}
 		results.businesses = businesslist
+		if (results.error) {
+			def errortext = [:]
+			def errorid = [:]
+			def errorlist = []
+			def errorresults = [:]
+			errortext.text = results.error.text
+			errorid.id = results.error.id
+			errorlist << errortext
+			errorlist << errorid
+			errorresults.error = errorlist
+			results.error = errorresults
+		}
 		return results
     }
 }
