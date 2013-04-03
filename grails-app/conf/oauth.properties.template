@@ -1,0 +1,4 @@
+auth.yelp.consumerKey=YOUR_CONSUMER_KEY
+auth.yelp.consumerSecret=YOUR_CONSUMER_SECRET
+auth.yelp.token=YOUR_TOKEN
+auth.yelp.tokenSecret=YOUR_TOKEN_SECRET
