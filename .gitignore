@@ -1,4 +1,3 @@
 /target
 /target-eclipse
-.classpath
 grails-app/conf/oauth.properties
