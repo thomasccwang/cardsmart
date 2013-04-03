@@ -31,23 +31,10 @@ function initialize() {
 		streetViewControl: false
 	};
 	gMap = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-
-	google.maps.event.addListener(gMap, 'center_changed', function() {
-	    // 2 seconds after the center of the map has changed, re-do search
-	    window.setTimeout(function() {
-	    	loadCategories();
-	    }, 2000);
-	  });
-
-	google.maps.event.addListener(gMap, 'zoom_changed', function() {
-	    // 2 seconds after the center of the map has changed, re-do search
-	    window.setTimeout(function() {
-	    	loadCategories();
-	    }, 2000);
-	  });
-	  
-	//loadCategories();
 	handleUserGeolocation();
+
+	var reloadLink = document.getElementById('reload-link');
+	reloadLink.onclick = loadCategories;
 } // function - initialize()
 
 function handleUserGeolocation() {
@@ -81,6 +68,7 @@ function loadCategories() {
 	jQuery.getJSON(url, function(data){
 		loadMatchingPlaces(data.categories)
 	});
+	return false;
 }
 
 function getMapBounds() {
@@ -102,16 +90,21 @@ function loadMatchingPlaces(categories) {
 			var latlng = new google.maps.LatLng(data.businesses[i].lat,data.businesses[i].lng);
 			var storename = data.businesses[i].name;
 			var address = data.businesses[i].address;
-			var marker = createStoreMarker(latlng,storename,address);
-			var sidebarentry = createSidebarEntry(marker,storename,address);
+			var storecategories = '';
+			for (var j=0; j < data.businesses[i].categories.length; j++) {
+				storecategories += data.businesses[i].categories[j];
+				if (j < data.businesses[i].categories.length-1) storecategories += ', ';
+			}
+			var marker = createStoreMarker(latlng,storename,address,storecategories);
+			var sidebarentry = createSidebarEntry(marker,storename,address,storecategories);
 			sidebar.appendChild(sidebarentry);	
 		}
 	});
 }
 
-function createStoreMarker(latlng, storename, address) {
+function createStoreMarker(latlng, storename, address, storecategories) {
 	var html = '';
-	html = '<b>' + storename + '</b><br/>' + address;
+	html = '<b>' + storename + '</b><br/>Category:' + storecategories + '<br/>' + address;
 	var marker = new google.maps.Marker({position: latlng, map: gMap});
 	gMarkersArray.push(marker);
 
@@ -123,9 +116,9 @@ function createStoreMarker(latlng, storename, address) {
 	return marker;
 } 
 
-function createSidebarEntry(marker, storename, address) {
+function createSidebarEntry(marker, storename, address, storecategories) {
 	var div = document.createElement('div');
-	var html = '<b>' + storename + '</b> <br/>' + address;
+	var html = '<b>' + storename + '</b><br/>Category:' + storecategories + '<br/>' + address;
 	div.innerHTML = html;
 	div.style.cursor = 'pointer';
 	div.style.marginBottom = '5px'; 
@@ -141,6 +134,8 @@ function createSidebarEntry(marker, storename, address) {
 	return div;
 }
 
+
+
 google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
@@ -151,7 +146,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 	<ul>
 		<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
 		<li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-		<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+		<li><a href="${createLink(action: 'map')}" id="reload-link">Update Map</a></li>
 	</ul>
 </div>
 <div id="sidebar" style="width: 300px; height: 640px; float:left;"></div>
