@@ -90,13 +90,17 @@ function loadMatchingPlaces(categories) {
 			var latlng = new google.maps.LatLng(data.businesses[i].lat,data.businesses[i].lng);
 			var storename = data.businesses[i].name;
 			var address = data.businesses[i].address;
-			var storecategories = '';
-			for (var j=0; j < data.businesses[i].categories.length; j++) {
-				storecategories += data.businesses[i].categories[j];
-				if (j < data.businesses[i].categories.length-1) storecategories += ', ';
+			var categories_str = '';
+			var categories_arr = [];
+			for (var j = 0; j < data.businesses[i].categories.length; j++) {
+				for (var key in data.businesses[i].categories[j]) {
+					categories_arr.push(key);
+				}
 			}
-			var marker = createStoreMarker(latlng,storename,address,storecategories);
-			var sidebarentry = createSidebarEntry(marker,storename,address,storecategories);
+			categories_str = categories_arr.join(', ');
+					
+			var marker = createStoreMarker(latlng,storename,address,categories_str);
+			var sidebarentry = createSidebarEntry(marker,storename,address,categories_str);
 			sidebar.appendChild(sidebarentry);	
 		}
 	});
@@ -104,7 +108,7 @@ function loadMatchingPlaces(categories) {
 
 function createStoreMarker(latlng, storename, address, storecategories) {
 	var html = '';
-	html = '<b>' + storename + '</b><br/>Category:' + storecategories + '<br/>' + address;
+	html = '<b>' + storename + '</b><br/>Category: ' + storecategories + '<br/>' + address;
 	var marker = new google.maps.Marker({position: latlng, map: gMap});
 	gMarkersArray.push(marker);
 
@@ -118,7 +122,7 @@ function createStoreMarker(latlng, storename, address, storecategories) {
 
 function createSidebarEntry(marker, storename, address, storecategories) {
 	var div = document.createElement('div');
-	var html = '<b>' + storename + '</b><br/>Category:' + storecategories + '<br/>' + address;
+	var html = '<b>' + storename + '</b><br/>Category: ' + storecategories + '<br/>' + address;
 	div.innerHTML = html;
 	div.style.cursor = 'pointer';
 	div.style.marginBottom = '5px'; 

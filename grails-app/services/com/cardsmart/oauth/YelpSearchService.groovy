@@ -47,7 +47,9 @@ class YelpSearchService {
 			if (address.length() > 0) address = address.substring(0, address.length()-1)
 			business.address = address + ", " + it.location.city + ", " + it.location.state_code
 			it.categories.each() { item ->
-				categorieslist << item[1]
+				def catmap = [:]
+				catmap[item[0]] = item[1];
+				categorieslist << catmap
 			}
 			business.categories = categorieslist
 			businesslist << business
