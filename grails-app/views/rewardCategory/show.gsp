@@ -41,6 +41,26 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${rewardCategoryInstance?.parent}">
+				<li class="fieldcontain">
+					<span id="parent-label" class="property-label"><g:message code="rewardCategory.parent.label" default="Parent" /></span>
+					
+						<span class="property-value" aria-labelledby="parent-label"><g:link controller="rewardCategory" action="show" id="${rewardCategoryInstance?.parent?.id}">${rewardCategoryInstance?.parent?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${rewardCategoryInstance?.children}">
+				<li class="fieldcontain">
+					<span id="children-label" class="property-label"><g:message code="rewardCategory.children.label" default="Children" /></span>
+					
+						<g:each in="${rewardCategoryInstance.children}" var="c">
+						<span class="property-value" aria-labelledby="children-label"><g:link controller="rewardCategory" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
 			</ol>
 			<g:form>
 				<fieldset class="buttons">

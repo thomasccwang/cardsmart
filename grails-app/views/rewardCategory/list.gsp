@@ -28,6 +28,8 @@
 					
 						<g:sortableColumn property="description" title="${message(code: 'rewardCategory.description.label', default: 'Description')}" />
 					
+						<th><g:message code="rewardCategory.parent.label" default="Parent" /></th>
+					
 					</tr>
 				</thead>
 				<tbody>
@@ -37,6 +39,8 @@
 						<td><g:link action="show" id="${rewardCategoryInstance.id}">${fieldValue(bean: rewardCategoryInstance, field: "name")}</g:link></td>
 					
 						<td>${fieldValue(bean: rewardCategoryInstance, field: "description")}</td>
+					
+						<td>${fieldValue(bean: rewardCategoryInstance, field: "parent")}</td>
 					
 					</tr>
 				</g:each>

@@ -25,22 +25,31 @@ class BootStrap {
 		masc.addToCards(chasfreedom)
 		chas.addToCards(chasfreedom)
 		
-		def catgrocery = new RewardCategory(name:"grocery", description:"Grocery").save()
-		def catgas = new RewardCategory(name:"servicestations", description:"Gas & Service Stations").save()
-		def catdrugstore = new RewardCategory(name:"drugstores", description:"Drug Stores").save()
-		def catrestaurant = new RewardCategory(name:"restaurants", description:"Restaurants").save()
-		def catcinema = new RewardCategory(name:"movietheaters", description:"Cinema").save()
+		//Food (food)
+		def cFood = new RewardCategory(name:"food", description:"Food").save()
+			def cGrocery = new RewardCategory(name:"grocery", description:"Grocery", parent: cFood).save()
+			cFood.addToChildren(cGrocery)
+		def cGas = new RewardCategory(name:"servicestations", description:"Gas & Service Stations").save()
+		def cDrugstore = new RewardCategory(name:"drugstores", description:"Drug Stores").save()
+		def cRestaurant = new RewardCategory(name:"restaurants", description:"Restaurants").save()
+			def cTradamerican = new RewardCategory(name:"tradamerican", description:"American (Traditional)", parent:cRestaurant).save()
+			def cHotdog = new RewardCategory(name:"hotdog", description:"Hot Dogs", parent:cRestaurant).save()
+			def cSandwiches = new RewardCategory(name:"sandwiches", description:"Sandwiches", parent:cRestaurant).save()
+			cRestaurant.addToChildren(cTradamerican)
+			cRestaurant.addToChildren(cHotdog)
+			cRestaurant.addToChildren(cSandwiches)
+		def cCinema = new RewardCategory(name:"movietheaters", description:"Cinema").save()
 		
-		def bofacrgroceries = new CardReward(card:bofacashrewards, category: catgrocery, description:"2% cash back on groceries", startMonth:1, endMonth:12).save()
+		def bofacrgroceries = new CardReward(card:bofacashrewards, category: cGrocery, description:"2% cash back on groceries", startMonth:1, endMonth:12).save()
 		bofacashrewards.addToRewards(bofacrgroceries)
 		
-		def bofacrgas = new CardReward(card:bofacashrewards, category: catgas, description:"3% cash back on gas", startMonth:1, endMonth:12).save()
+		def bofacrgas = new CardReward(card:bofacashrewards, category: cGas, description:"3% cash back on gas", startMonth:1, endMonth:12).save()
 		bofacashrewards.addToRewards(bofacrgas)
 		
-		def chasfrrest = new CardReward(card:chasfreedom, category: catrestaurant, description:"5% cash back at restaurants", startMonth:4, endMonth:6).save()
+		def chasfrrest = new CardReward(card:chasfreedom, category: cRestaurant, description:"5% cash back at restaurants", startMonth:4, endMonth:6).save()
 		chasfreedom.addToRewards(chasfrrest)
 		
-		def chasfrcine = new CardReward(card:chasfreedom, category: catcinema, description:"5% cash back at movie theaters", startMonth:4, endMonth:6).save()
+		def chasfrcine = new CardReward(card:chasfreedom, category: cCinema, description:"5% cash back at movie theaters", startMonth:4, endMonth:6).save()
 		chasfreedom.addToRewards(chasfrcine)
 	}
 	
