@@ -63,7 +63,7 @@
 				<li class="fieldcontain">
 					<span id="category-label" class="property-label"><g:message code="cardReward.category.label" default="Category" /></span>
 					
-						<span class="property-value" aria-labelledby="category-label"><g:link controller="rewardCategory" action="show" id="${cardRewardInstance?.category?.id}">${cardRewardInstance?.category?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="category-label"><g:link controller="yelpCategory" action="show" id="${cardRewardInstance?.category?.id}">${cardRewardInstance?.category?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>
