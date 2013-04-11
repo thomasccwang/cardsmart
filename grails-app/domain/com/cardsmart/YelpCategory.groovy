@@ -1,17 +1,17 @@
 package com.cardsmart
 
-class RewardCategory {
+class YelpCategory {
 	String name
 	String description
 	
-	RewardCategory parent
-	static hasMany = [children:RewardCategory]
+	YelpCategory parent
+	static hasMany = [children:YelpCategory]
 	
-    static constraints = {
+	static constraints = {
 		name blank:false
 		description blank:false
 		parent nullable:true
-    }
+	}
 	
 	String toString() {
 		"${description}"

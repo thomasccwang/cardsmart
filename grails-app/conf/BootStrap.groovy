@@ -2,7 +2,7 @@ import com.cardsmart.CardNetwork
 import com.cardsmart.CardIssuer
 import com.cardsmart.Card
 import com.cardsmart.CardReward
-import com.cardsmart.RewardCategory
+import com.cardsmart.YelpCategory
 
 class BootStrap {
 
@@ -25,20 +25,19 @@ class BootStrap {
 		masc.addToCards(chasfreedom)
 		chas.addToCards(chasfreedom)
 		
-		//Food (food)
-		def cFood = new RewardCategory(name:"food", description:"Food").save()
-			def cGrocery = new RewardCategory(name:"grocery", description:"Grocery", parent: cFood).save()
+		def cFood = new YelpCategory(name:"food", description:"Food").save()
+			def cGrocery = new YelpCategory(name:"grocery", description:"Grocery", parent: cFood).save()
 			cFood.addToChildren(cGrocery)
-		def cGas = new RewardCategory(name:"servicestations", description:"Gas & Service Stations").save()
-		def cDrugstore = new RewardCategory(name:"drugstores", description:"Drug Stores").save()
-		def cRestaurant = new RewardCategory(name:"restaurants", description:"Restaurants").save()
-			def cTradamerican = new RewardCategory(name:"tradamerican", description:"American (Traditional)", parent:cRestaurant).save()
-			def cHotdog = new RewardCategory(name:"hotdog", description:"Hot Dogs", parent:cRestaurant).save()
-			def cSandwiches = new RewardCategory(name:"sandwiches", description:"Sandwiches", parent:cRestaurant).save()
+		def cGas = new YelpCategory(name:"servicestations", description:"Gas & Service Stations").save()
+		def cDrugstore = new YelpCategory(name:"drugstores", description:"Drug Stores").save()
+		def cRestaurant = new YelpCategory(name:"restaurants", description:"Restaurants").save()
+			def cTradamerican = new YelpCategory(name:"tradamerican", description:"American (Traditional)", parent:cRestaurant).save()
+			def cHotdog = new YelpCategory(name:"hotdog", description:"Hot Dogs", parent:cRestaurant).save()
+			def cSandwiches = new YelpCategory(name:"sandwiches", description:"Sandwiches", parent:cRestaurant).save()
 			cRestaurant.addToChildren(cTradamerican)
 			cRestaurant.addToChildren(cHotdog)
 			cRestaurant.addToChildren(cSandwiches)
-		def cCinema = new RewardCategory(name:"movietheaters", description:"Cinema").save()
+		def cCinema = new YelpCategory(name:"movietheaters", description:"Cinema").save()
 		
 		def bofacrgroceries = new CardReward(card:bofacashrewards, category: cGrocery, description:"2% cash back on groceries", startMonth:1, endMonth:12).save()
 		bofacashrewards.addToRewards(bofacrgroceries)

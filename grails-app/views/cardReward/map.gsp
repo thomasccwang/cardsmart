@@ -95,6 +95,7 @@ function loadMatchingPlaces(categories) {
 			for (var j = 0; j < data.businesses[i].categories.length; j++) {
 				for (var key in data.businesses[i].categories[j]) {
 					categories_arr.push(key);
+					//categories_arr.push(data.businesses[i].categories[j][key]);
 				}
 			}
 			categories_str = categories_arr.join(', ');

@@ -2,7 +2,7 @@ package com.cardsmart
 
 class CardReward {
 	Card card
-	RewardCategory category
+	YelpCategory category
 	String description
 	Integer startMonth
 	Integer endMonth
