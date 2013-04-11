@@ -103,11 +103,20 @@ class CardRewardController {
 	
 	def jsonlist() {
 		def results = [:]
-		def cardslist = []
+		def rewardslist = []
 		def catnameslist = []
 		def yelpcategorieslist = []
 		String catnamesstr = ""
-		Card.list().each { it ->
+		CardReward.list().each { it ->
+			def reward = [:]
+			reward.card = it.card.toString()
+			reward.description = it.description
+			reward.category = it.category.name
+			rewardslist << reward
+			if (catnameslist.find{c -> c == it.category.name} == null) catnameslist << it.category.name
+		}
+		results.rewards = rewardslist
+		/*Card.list().each { it ->
 			def jsoncard = [:]
 			jsoncard.name = it.toString()
 			def rewardslist = []
@@ -121,7 +130,7 @@ class CardRewardController {
 			jsoncard.rewards = rewardslist
 			cardslist << jsoncard			
 		}
-		results.cards = cardslist
+		results.cards = cardslist*/
 		catnameslist.each { it ->
 			catnamesstr += it
 			if (it != catnameslist.last()) catnamesstr += ","
