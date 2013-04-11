@@ -105,6 +105,7 @@ class CardRewardController {
 		def results = [:]
 		def cardslist = []
 		def catnameslist = []
+		def yelpcategorieslist = []
 		String catnamesstr = ""
 		Card.list().each { it ->
 			def jsoncard = [:]
@@ -126,6 +127,14 @@ class CardRewardController {
 			if (it != catnameslist.last()) catnamesstr += ","
 		}
 		results.categories = catnamesstr
+		
+		YelpCategory.list().each { it ->
+			def c = [:]
+			c[it.name] = it.parent ? it.parent.name : ""
+			yelpcategorieslist << c
+		}
+		results.yelpcategories = yelpcategorieslist
+		
 		render results as JSON
 	}
 	

@@ -28,8 +28,12 @@ class BootStrap {
 		def cFood = new YelpCategory(name:"food", description:"Food").save()
 			def cGrocery = new YelpCategory(name:"grocery", description:"Grocery", parent: cFood).save()
 			cFood.addToChildren(cGrocery)
-		def cGas = new YelpCategory(name:"servicestations", description:"Gas & Service Stations").save()
-		def cDrugstore = new YelpCategory(name:"drugstores", description:"Drug Stores").save()
+		def cAutomotive = new YelpCategory(name:"auto", description:"Automotive").save()
+			def cGas = new YelpCategory(name:"servicestations", description:"Gas & Service Stations", parent:cAutomotive).save()
+			cAutomotive.addToChildren(cGas)
+		def cShopping = new YelpCategory(name:"shopping", description:"Shopping").save()
+			def cDrugstores = new YelpCategory(name:"drugstores", description:"Drug Stores", parent: cShopping).save()
+			cShopping.addToChildren(cDrugstores)
 		def cRestaurant = new YelpCategory(name:"restaurants", description:"Restaurants").save()
 			def cTradamerican = new YelpCategory(name:"tradamerican", description:"American (Traditional)", parent:cRestaurant).save()
 			def cHotdog = new YelpCategory(name:"hotdog", description:"Hot Dogs", parent:cRestaurant).save()
@@ -37,8 +41,10 @@ class BootStrap {
 			cRestaurant.addToChildren(cTradamerican)
 			cRestaurant.addToChildren(cHotdog)
 			cRestaurant.addToChildren(cSandwiches)
-		def cCinema = new YelpCategory(name:"movietheaters", description:"Cinema").save()
-		
+		def cArts = new YelpCategory(name:"arts", description:"Arts & Entertainment").save()
+			def cCinema = new YelpCategory(name:"movietheaters", description:"Cinema", parent:cArts).save()
+			cArts.addToChildren(cCinema)
+			
 		def bofacrgroceries = new CardReward(card:bofacashrewards, category: cGrocery, description:"2% cash back on groceries", startMonth:1, endMonth:12).save()
 		bofacashrewards.addToRewards(bofacrgroceries)
 		
