@@ -66,7 +66,7 @@ function deleteOverlays() {
 function loadCategories() {
 	var url = "${createLink(action:'jsonlist')}";
 	jQuery.getJSON(url, function(data){
-		loadMatchingPlaces(data.categories)
+		loadMatchingPlaces(data.rewards, data.categories, data.yelpcategories)
 	});
 	return false;
 }
@@ -78,7 +78,16 @@ function getMapBounds() {
 	return(swlatlng + "|" + nelatlng);
 }
 
-function loadMatchingPlaces(categories) {
+function Reward(card, description) {
+	this.card = card;
+	this.description = description;
+	this.equals = function(another_reward) {
+		if (this.card == another_reward.card && this.description == another_reward.description) return true
+		else return false;
+	};
+}
+
+function loadMatchingPlaces(rewards, categories, yelpcategories) {
 	var url = "${createLink(controller:'yelp', action:'search')}?";
 	url += "category_filter="+categories+"&bounds="+getMapBounds()+"&limit=10";
 	jQuery.getJSON(url, function(data){
@@ -92,10 +101,11 @@ function loadMatchingPlaces(categories) {
 			var address = data.businesses[i].address;
 			var categories_str = '';
 			var categories_arr = [];
+			var rewards_arr = [];// full of Reward objects
 			for (var j = 0; j < data.businesses[i].categories.length; j++) {
 				for (var key in data.businesses[i].categories[j]) {
-					categories_arr.push(key);
-					//categories_arr.push(data.businesses[i].categories[j][key]);
+					categories_arr.push(key); // the long Yelp category name
+					//categories_arr.push(data.businesses[i].categories[j][key]); // the short Yelp category identifier
 				}
 			}
 			categories_str = categories_arr.join(', ');
