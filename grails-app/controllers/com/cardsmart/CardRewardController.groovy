@@ -130,7 +130,7 @@ class CardRewardController {
 		
 		YelpCategory.list().each { it ->
 			def c = [:]
-			c[it.name] = it.parent ? it.parent.name : ""
+			c[it.name] = it.parent ? it.parent.id : 0
 			yelpcategorieslist << c
 		}
 		results.yelpcategories = yelpcategorieslist
