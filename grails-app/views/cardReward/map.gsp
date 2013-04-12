@@ -78,18 +78,43 @@ function getMapBounds() {
 	return(swlatlng + "|" + nelatlng);
 }
 
-function Reward(card, description) {
-	this.card = card;
-	this.description = description;
-	this.equals = function(another_reward) {
-		if (this.card == another_reward.card && this.description == another_reward.description) return true
-		else return false;
-	};
+function getRewardsForCategory(rewards, reward_cards, category_id, yelpcategories) {
+	//alert(category_id);
+	//alert (yelpcategories.length);
+	
+	// match the store's category to rewards category
+	for (var j = 0; j<rewards.length; j++) {
+		if (rewards[j].category == category_id) {
+			alert('matched ' + category_id);
+			return;
+		}
+	}
+
+	// match the store's category parent to rewards category			
+	for (var i = 0; i < yelpcategories.length; i++) {
+		for (var key in yelpcategories[i]) {
+			if (category_id == key) {
+				alert('found category '+category_id + ' in yelp categories with parent id of ' + yelpcategories[i][key]);
+				
+				if (yelpcategories[i][key] == 0) {
+					alert('at top category, no match');
+					return;
+				}
+				else { // has parent category
+					for (var parentkey in yelpcategories[yelpcategories[i][key]-1]) {
+						alert('trying to match '+parentkey);
+						return getRewardsForCategory(rewards, reward_cards, parentkey, yelpcategories);
+					}					
+				}
+			}
+		}
+	}
+	alert('no match for ' + category_id);
 }
 
 function loadMatchingPlaces(rewards, categories, yelpcategories) {
 	var url = "${createLink(controller:'yelp', action:'search')}?";
-	url += "category_filter="+categories+"&bounds="+getMapBounds()+"&limit=10";
+	url += "category_filter="+categories+"&bounds="+getMapBounds()+"&limit=1";
 	jQuery.getJSON(url, function(data){
 		var sidebar = document.getElementById('sidebar');
 		sidebar.innerHTML = '';
@@ -101,10 +126,11 @@ function loadMatchingPlaces(rewards, categories, yelpcategories) {
 			var address = data.businesses[i].address;
 			var categories_str = '';
 			var categories_arr = [];
-			var rewards_arr = [];// full of Reward objects
+			var reward_cards = [];// full of Reward maps
 			for (var j = 0; j < data.businesses[i].categories.length; j++) {
 				for (var key in data.businesses[i].categories[j]) {
 					categories_arr.push(key); // the long Yelp category name
+					getRewardsForCategory(rewards, reward_cards, data.businesses[i].categories[j][key], yelpcategories)
 					//categories_arr.push(data.businesses[i].categories[j][key]); // the short Yelp category identifier
 				}
 			}
