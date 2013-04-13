@@ -149,7 +149,7 @@ function createStoreMarker(latlng, storename, address, storecategories, reward_c
 	var html = '';
 	html = '<b>' + storename + '</b><br/>Category: ' + storecategories + '<br/>' + address + '<br/>';
 	for (var i=0; i<reward_cards.length; i++) {
-		html += reward_cards[i].card + '<br/>'+ reward_cards[i].description + '<br/>';
+		html += '<b>' + reward_cards[i].card + '</b><br/>'+ reward_cards[i].description + '<br/>';
 	}
 	var marker = new google.maps.Marker({position: latlng, map: gMap});
 	gMarkersArray.push(marker);
