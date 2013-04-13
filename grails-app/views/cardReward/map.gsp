@@ -83,7 +83,17 @@ function getRewardsForCategory(rewards, reward_cards, category_id, yelpcategorie
 	for (var j = 0; j<rewards.length; j++) {
 		if (rewards[j].category == category_id) {
 			// todo : only add card reward if not already in list..
-			reward_cards.push(rewards[j]);
+			//alert(rewards[j].card);
+			var added = false;
+			for (var k = 0; k < reward_cards.length; k++) {
+				if ( (rewards[j].card == reward_cards[k].card) && 
+					 (rewards[j].description == reward_cards[k].description)) {
+					 //alert(rewards[j].card + ' already in list');
+					 added = true;
+				}
+				//alert(reward_cards[k].card);
+			}
+			if (!added) reward_cards.push(rewards[j]);
 			return;
 		}
 	}
