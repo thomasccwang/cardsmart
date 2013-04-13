@@ -1,5 +1,8 @@
 cardsmart
 =========
+
+Background
+=========
 This Grails app demonstrates interfacing with the Yelp search API and the Google Maps javascript API.
 
 Yelp API requests requires authentication credentials.
