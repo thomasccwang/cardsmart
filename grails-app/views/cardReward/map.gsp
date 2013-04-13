@@ -79,42 +79,34 @@ function getMapBounds() {
 }
 
 function getRewardsForCategory(rewards, reward_cards, category_id, yelpcategories) {
-	//alert(category_id);
-	//alert (yelpcategories.length);
-	
 	// match the store's category to rewards category
 	for (var j = 0; j<rewards.length; j++) {
 		if (rewards[j].category == category_id) {
-			alert('matched ' + category_id);
+			// todo : only add card reward if not already in list..
+			reward_cards.push(rewards[j]);
 			return;
 		}
 	}
-
 	// match the store's category parent to rewards category			
 	for (var i = 0; i < yelpcategories.length; i++) {
 		for (var key in yelpcategories[i]) {
 			if (category_id == key) {
-				alert('found category '+category_id + ' in yelp categories with parent id of ' + yelpcategories[i][key]);
-				
-				if (yelpcategories[i][key] == 0) {
-					alert('at top category, no match');
+				if (yelpcategories[i][key] == 0) { // top level category
 					return;
 				}
 				else { // has parent category
 					for (var parentkey in yelpcategories[yelpcategories[i][key]-1]) {
-						alert('trying to match '+parentkey);
 						return getRewardsForCategory(rewards, reward_cards, parentkey, yelpcategories);
 					}					
 				}
 			}
 		}
 	}
-	alert('no match for ' + category_id);
 }
 
 function loadMatchingPlaces(rewards, categories, yelpcategories) {
 	var url = "${createLink(controller:'yelp', action:'search')}?";
-	url += "category_filter="+categories+"&bounds="+getMapBounds()+"&limit=1";
+	url += "category_filter="+categories+"&bounds="+getMapBounds()+"&limit=10";
 	jQuery.getJSON(url, function(data){
 		var sidebar = document.getElementById('sidebar');
 		sidebar.innerHTML = '';
@@ -136,16 +128,19 @@ function loadMatchingPlaces(rewards, categories, yelpcategories) {
 			}
 			categories_str = categories_arr.join(', ');
 					
-			var marker = createStoreMarker(latlng,storename,address,categories_str);
+			var marker = createStoreMarker(latlng,storename,address,categories_str,reward_cards);
 			var sidebarentry = createSidebarEntry(marker,storename,address,categories_str);
 			sidebar.appendChild(sidebarentry);	
 		}
 	});
 }
 
-function createStoreMarker(latlng, storename, address, storecategories) {
+function createStoreMarker(latlng, storename, address, storecategories, reward_cards) {
 	var html = '';
-	html = '<b>' + storename + '</b><br/>Category: ' + storecategories + '<br/>' + address;
+	html = '<b>' + storename + '</b><br/>Category: ' + storecategories + '<br/>' + address + '<br/>';
+	for (var i=0; i<reward_cards.length; i++) {
+		html += reward_cards[i].card + '<br/>'+ reward_cards[i].description + '<br/>';
+	}
 	var marker = new google.maps.Marker({position: latlng, map: gMap});
 	gMarkersArray.push(marker);
 
