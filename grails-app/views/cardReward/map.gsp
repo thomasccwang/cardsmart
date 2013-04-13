@@ -82,7 +82,6 @@ function getRewardsForCategory(rewards, reward_cards, category_id, yelpcategorie
 	// match the store's category to rewards category
 	for (var j = 0; j<rewards.length; j++) {
 		if (rewards[j].category == category_id) {
-			// todo : only add card reward if not already in list..
 			//alert(rewards[j].card);
 			var added = false;
 			for (var k = 0; k < reward_cards.length; k++) {
