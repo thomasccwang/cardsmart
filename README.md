@@ -9,7 +9,7 @@ Description
 =========
 Some cash back or points reward credit cards have increased benefits for special categories, i.e. groceries or gas.
 
-CARDSMART stores those special credit card reward categories and finds matching stores near by that match those categories and displays them on a map.
+CARDSMART saves these special credit card reward categories and finds matching stores near by that match those categories and displays them on a map.
 
 Technical details
 =========
