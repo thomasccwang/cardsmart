@@ -34,8 +34,13 @@ Put the authentication credentials in the following file:
 grails-app/conf/oauth.properties.template
 Rename the file to "oauth.properties" before running the app.
 
+Sample data, including some yelp categories, credit cards, and rewards info will be loaded at runtime by BootStrap.groovy.
+
+From the homepage, click the CardReward controller to see a list of the credit card rewards in the system. Click on "Show Map" to view nearby stores matching the credit card reward categories. Browser must support user geolocation and have it enabled. The map is zoomable and moveable; click "Update Map" to refresh results after zoom or move actions.
+
 Desired features
 =========
-
-
-
+1. Support separate user accounts, each with their own credit cards/rewards.
+2. Support credit card reward active periods.
+3. Support rewards that apply to specific stores instead of categories.
+4. UI improvements.
