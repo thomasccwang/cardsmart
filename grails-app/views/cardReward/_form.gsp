@@ -39,6 +39,6 @@
 		<g:message code="cardReward.category.label" default="Category" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="category" name="category.id" from="${com.cardsmart.RewardCategory.list()}" optionKey="id" required="" value="${cardRewardInstance?.category?.id}" class="many-to-one"/>
+	<g:select id="category" name="category.id" from="${com.cardsmart.YelpCategory.list()}" optionKey="id" required="" value="${cardRewardInstance?.category?.id}" class="many-to-one"/>
 </div>
 
