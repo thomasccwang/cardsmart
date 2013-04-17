@@ -1,3 +1,3 @@
 /target
 /target-eclipse
-grails-app/conf/oauth.properties
+grails-app/conf/api.properties
