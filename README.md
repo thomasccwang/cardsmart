@@ -27,12 +27,15 @@ https://developers.google.com/maps/articles/phpsqlsearch_v3
 
 Usage
 =========
-To generate authentication credentials for Yelp API access, visit 
+To generate authentication credentials for Yelp API access, visit
 http://www.yelp.com/developers/documentation/v2/authentication
 
+To get Google API access, visit
+https://developers.google.com/maps/documentation/javascript/tutorial#api_key
+
 Put the authentication credentials in the following file:
-grails-app/conf/oauth.properties.template
-Rename the file to "oauth.properties" before running the app.
+grails-app/conf/api.properties.template
+Rename the file to "api.properties" before running the app.
 
 Sample data, including some yelp categories, credit cards, and rewards info will be loaded at runtime by BootStrap.groovy.
 
