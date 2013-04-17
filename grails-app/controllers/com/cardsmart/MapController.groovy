@@ -4,7 +4,12 @@ import grails.converters.*
 
 class MapController {
 
-    def index() { }
+	def grailsApplication // see Config.groovy and oauth.properties
+	String googlemapapi = ""
+	
+    def index() {
+		googlemapapi = grailsApplication.config.api.google.key
+	}
 	
 	def jsonlist() {
 		def results = [:]

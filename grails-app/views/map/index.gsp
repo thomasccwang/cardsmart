@@ -8,7 +8,7 @@
 <title><g:message code="default.show.label" args="[entityName]" /></title>
 <g:javascript library='jquery' />
 <script type="text/javascript"
-	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGkVdZwX63sL0NGMR1CBf44D7g6DZPUzo&sensor=true">
+	src="https://maps.googleapis.com/maps/api/js?sensor=true&key=${googlemapapi}">
 </script>
 <script type="text/javascript">
 var gMap;
