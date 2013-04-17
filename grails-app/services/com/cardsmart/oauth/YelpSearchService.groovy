@@ -18,11 +18,11 @@ class YelpSearchService {
     def search(Map querymap) {
 		OAuthService service = new ServiceBuilder()
 									.provider(YelpApi2)
-									.apiKey(grailsApplication.config.auth.yelp.consumerKey as String)
-									.apiSecret(grailsApplication.config.auth.yelp.consumerSecret as String)
+									.apiKey(grailsApplication.config.yelp.oauth.consumerKey as String)
+									.apiSecret(grailsApplication.config.yelp.oauth.consumerSecret as String)
 									.build()
-		Token accessToken = new Token(grailsApplication.config.auth.yelp.token as String, 
-			                          grailsApplication.config.auth.yelp.tokenSecret as String)
+		Token accessToken = new Token(grailsApplication.config.yelp.oauth.token as String, 
+			                          grailsApplication.config.yelp.oauth.tokenSecret as String)
 		OAuthRequest oarequest = new OAuthRequest(Verb.GET, "http://api.yelp.com/v2/search")
 		querymap.each {
 			oarequest.addQuerystringParameter(it.key as String, it.value as String)
